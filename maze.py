@@ -1,5 +1,4 @@
 import numpy as np
-import sys
 
 class Maze:
     def __init__(self, filename):
@@ -17,14 +16,14 @@ class Maze:
             tmp.append(list(map(int, line.rstrip())))
         self.maze = np.array(tmp)
         self.solve(self.start_point, self.path)
+        #self.printMaze()
+
+
+    def printMaze(self):
         c, r = self.start_point
         self.maze[r][c] = 3
         c, r = self.end_point
         self.maze[r][c] = 4
-        self.printMaze()
-
-
-    def printMaze(self):
         print('\nCol: %d, Rows: %d' % (self.col, self.row))
         print('start_point: %s marked with 3' % (self.start_point,))
         print('end_point: %s marked with 4' % (self.end_point,))
@@ -58,10 +57,6 @@ class Maze:
     def getPath(self):
         return self.path[::-1]
 
-
-
 if __name__ == "__main__":
-    maze = Maze(sys.argv[1])
-    sys.stdout.write( maze.getPath())
-    sys.stdout.flush()
-    sys.exit(0)
+    maze = Maze(input())
+    print( maze.getPath())
