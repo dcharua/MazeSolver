@@ -41,14 +41,21 @@ class Maze:
         print ('visiting %d,%d' % (c, r))
         self.maze[r][c] = 2
 
-        if ((c < self.col-1 and self.solve((c+1, r)))
-            or (r > 0 and self.solve((c, r-1)))
-            or (c > 0 and self.solve((c-1, r)))
-            or (r < self.row-1 and self.solve((c, r+1)))):
+        if (c < self.col-1 and self.solve((c+1, r))):
+            print ("R")
+            return True
+        elif (r > 0 and self.solve((c, r-1))):
+            print ("U")
+            return True
+        elif (c > 0 and self.solve((c-1, r))):
+            print ("L")
+            return True
+        elif(r < self.row-1 and self.solve((c, r+1))):
+            print ("D")
             return True
         return False
 
 
 
 if __name__ == "__main__":
-    maze = Maze("maze1.txt")
+    maze = Maze("maze2.txt")
