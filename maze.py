@@ -1,20 +1,19 @@
 import numpy as np
 
 class Maze:
-    def __init__(self, filename):
+    def __init__(self):
         self.path = ""
         tmp = []
-        lines = list(open(filename))
-        a, b = lines[0].rstrip().split(' ')
+        a, b = input().rstrip().split(' ')
         self.col = int(a)
         self.row =  int(b)
-        a, b = lines[1].rstrip().split(' ')
+        a, b = input().rstrip().split(' ')
         self.start_point = int(a), int(b)
-        a, b = lines[2].rstrip().split(' ')
+        a, b = input().rstrip().split(' ')
         self.end_point = int(a), int(b)
-        for line in reversed(lines[3:]):
-            tmp.append(list(map(int, line.rstrip())))
-        self.maze = np.array(tmp)
+        for i in range(self.row):
+            tmp.append(list(map(int, input().rstrip())))
+        self.maze = np.array(tmp[::-1])
         self.solve(self.start_point, self.path)
         #self.printMaze()
 
@@ -58,5 +57,5 @@ class Maze:
         return self.path[::-1]
 
 if __name__ == "__main__":
-    maze = Maze(input())
+    maze = Maze()
     print( maze.getPath())

@@ -1,7 +1,5 @@
 #include <iostream>
 #include <string>
-#include <fstream>
-#include <sstream>
 using namespace std;
 
 class Maze{
@@ -13,59 +11,40 @@ public:
   int end[2];
   string path;
   string finalPath;
-  Maze(){
-    path = "";
-    finalPath = "";
-  }
-  void readFile(istream& in){
-    string filename;
-    in >> filename;
-    int counter = 0, j = 0;
-    ifstream file(filename);
-    string line;
-    if (file.is_open()) {
-      while (getline(file , line )){
-        if (counter > 2){
-          for (int i=0; i < line.length(); i++){
-            maze[i + ((row-j-1) * row)] =line[i] -'0';
-          }
-          j++;
-        }
-        if (counter == 0){
-          istringstream ss(line);
-          string token;
-          getline(ss,token,' ');
-          col = stoi(token);
-          getline(ss,token,' ');
-          row = stoi(token);
-          maze=(int *) malloc(col * row * sizeof(int));
-        }
-        if (counter == 1){
-          istringstream ss(line);
-          string token;
-          getline(ss,token,' ');
-          start[0] = stoi(token);
-          getline(ss,token,' ');
-          start[1] = stoi(token);
-        }
-        if (counter == 2){
-          istringstream ss(line);
-          string token;
-          getline(ss,token,' ');
-          end[0] = stoi(token);
-          getline(ss,token,' ');
-          end[1] = stoi(token);
-        }
-        counter++;
+
+  Maze(){ path = ""; finalPath = "";}
+  ~Maze(){delete(maze);}
+
+  void readFile(){
+    string  line;
+    //Read rows and cols
+    cin >> line;
+    col = stoi(line);
+    cin >> line;
+    row = stoi(line);
+    maze = (int *) malloc(col * row * sizeof(int));
+    //Read start point
+    cin >> line;
+    start[0] = stoi(line);
+    cin >> line;
+    start[1] = stoi(line);
+    //Read end point
+    cin >> line;
+    end[0] = stoi(line);
+    cin >> line;
+    end[1] = stoi(line);
+    //Read start maze
+    for (int i=0; i < row; i++){
+      cin >> line;
+      for (int j=0; j< row; j++){
+        maze[j + ((row-i-1) * row)] =line[j] -'0';
       }
     }
-    file.close();
     solveMaze(start[0], start[1]);
   }
 
   void printMaze(){
     printPath();
-    cout << path<<endl;
     for (int i = 0; i < row; i++){
       for (int j = 0; j <col; j++){
         cout<< maze[j + (i * row)];
@@ -102,20 +81,22 @@ public:
       }
     return false;
   }
+
   void printPath(){
     int size = path.length();
     for (int i = size; i >= 0; i--)
       finalPath+=path[i];
     cout<< finalPath;
   }
-  ~Maze(){delete(maze);}
+
+
+
 };
 
 int main(){
   Maze * m = new Maze();
-  m->readFile(cin);
-  //m->printMaze();
+  m->readFile();
   m->printPath();
-  delete m;
+  //delete m;
+  return 0;
 }
-
