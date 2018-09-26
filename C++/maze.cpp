@@ -108,7 +108,6 @@ public:
       finalPath+=path[i];
     cout<< finalPath;
   }
-  //ary[y*sizeX + x]
   ~Maze(){delete(maze);}
 };
 
@@ -117,4 +116,6 @@ int main(){
   m->readFile(cin);
   //m->printMaze();
   m->printPath();
+  delete m;
 }
+
