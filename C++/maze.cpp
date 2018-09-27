@@ -1,3 +1,4 @@
+//Maze solver - Daniel Charua A01017419 - Mauricio Rico
 #include <iostream>
 #include <string>
 using namespace std;
@@ -11,10 +12,11 @@ public:
   int end[2];
   string path;
   string finalPath;
-
+  //Contructor destructor
   Maze(){ path = ""; finalPath = "";}
   ~Maze(){delete(maze);}
 
+  //function to read file
   void readFile(){
     string  line;
     //Read rows and cols
@@ -43,6 +45,7 @@ public:
     solveMaze(start[0], start[1]);
   }
 
+  //function to print maze with path for debugging
   void printMaze(){
     printPath();
     for (int i = 0; i < row; i++){
@@ -53,6 +56,7 @@ public:
     }
   }
 
+  //function used recursivly to solve maze
   bool solveMaze(int c, int r){
     if (c == end[0] && r == end[1]){
         return true;
@@ -82,21 +86,19 @@ public:
     return false;
   }
 
+  //function to print path
   void printPath(){
     int size = path.length();
     for (int i = size; i >= 0; i--)
       finalPath+=path[i];
     cout<< finalPath;
   }
-
-
-
 };
 
 int main(){
   Maze * m = new Maze();
   m->readFile();
   m->printPath();
-  //delete m;
+  delete m;
   return 0;
 }
